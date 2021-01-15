@@ -18,7 +18,7 @@ connection = psycopg2.connect(conText)#入力間違いがあるとここでエ�
 cur = connection.cursor()
 
 @app.route("/", methods=["POST"])
-#formからデータ取得
+#formからデータ取得、db格納
 def add_userinfo():
     username = request.form.get("name")
     mailaddress = request.form.get("mail")
@@ -30,3 +30,8 @@ def add_userinfo():
     connection.commit()
 
     return render_template("AddInfo.html")
+
+if __name__ == '__main__':
+    app.debug = True
+#    app.debug = False
+    app.run(host='0.0.0.0', port=8000)
