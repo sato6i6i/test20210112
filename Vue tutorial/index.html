@@ -1,0 +1,41 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="app">
+<!-- jsのdataで設定したproductの値を変えればHTML上のid="app"のdiv内のproductの部分も変わる -->
+      <div class="product">
+        <div class="product-image">
+          <!-- Vueのv-bindタグ -->
+          <!-- データが更新される度にsrc,alt属性にリンクされる -->
+          <!-- v-bindタグの省略形は:(コロン) -->
+          <img v-bind:src="image" v-bind:alt="altText"/>
+        </div>
+
+        <div class="product-info">
+          <h1>{{ product }}</h1>
+          <p><h1>{{ description }}</h1></p>
+          <p v-if="inventory > 10">In Stock</p>
+          <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+          <p v-else>Out of Stock</p>
+<!-- v-showでストックがある場合に飲み表示させる -->
+        </div>
+  <!-- {{}}内はjsの式 -->
+        <!-- <h2>{{ product }} project</h2>
+        <h6>{{ product }}</h6> -->
+        <!-- 使用できる表現式 -->
+        <!-- {{ product + '?' }} -->
+        <!-- {{ firstName + ' ' + lastName }} -->
+        <!-- {{ message.sqlit('').reverse().join('') }} -->
+      </div>
+      <a :href="jump">Vue</a>
+
+    </div>
+    <!-- Vueが使用可能になるグローバルパッケージをjsファイルの上に。 -->
+    <!-- 上に置かないとproductの置換がされない -->
+    <script src="https://unpkg.com/vue"></script>
+    <!-- main.jsのsourceを使用 -->
+    <script src="main.js"></script>
+
+  </body>
+</html>
