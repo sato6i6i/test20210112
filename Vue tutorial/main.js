@@ -8,13 +8,51 @@ var app = new Vue({
   el: '#app',
   data:{
     product: "Socks",
+    brand:"Vue Mastery",
     description: "A pair of warm, fuzzy socks",
-    image:"vmSocks-blue.jpg",
+    image:"vmSocks-blue-onWhite.jpg",
     altText:"A pair of socks",
     jump:"https://jp.vuejs.org/index.html",
-    inventory:0
-
+    inStock:true,
+    inventory:0,
+    details:["80% cotton","20% polyester",  "Gender-neutral"],
+    sizes:["S","M","L"],
+    variants:[
+      {
+        variantId:2234,
+        variantColor:"#008b8b",
+        variantImage:"vmSocks-green-onWhite.jpg"
+      },
+      {
+        variantId:2235,
+        variantColor:"blue",
+        variantImage:"vmSocks-blue-onWhite.jpg"
+      }
+    ],
+    cart:0,
+    selectedVariant:0
+  },
+  // selectedVariant:0　0はカーソルを上に置いたときのベースになる値。0から。
+  // dataの外にメソッド
+  methods:{
+    addToCart(){
+      // thisがないとカートが定義されていないというエラーになる。thisでインスタンスのcartを参照
+      this.cart+=1
+    },
+    removeToCart(){
+      this.cart-=1
+    },
+    updateProduct(variantImage){
+      // imageをvariantImageに更新する
+      this.image = variantImage
+      }
+  },
+  computed:{
+    title(){
+      return this.brand + ' ' + this.product
+    }
   }
+
 })
 // Vueインスタンスはアプリケーションのroot
 // ここにオプションオブジェクトを渡すことで作成される
