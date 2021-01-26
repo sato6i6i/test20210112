@@ -1,0 +1,204 @@
+<html>
+  <head>
+    <style>
+    body {
+       font-family: tahoma;
+       color:#282828;
+       margin: 0px;
+     }
+
+     .nav-bar {
+       background: linear-gradient(-90deg, #84CF6A, #16C0B0);
+       height: 60px;
+       margin-bottom: 15px;
+     }
+
+     .product {
+       display: flex;
+       flex-flow: wrap;
+       padding: 1rem;
+     }
+
+     img {
+       border: 1px solid #d8d8d8;
+       width: 70%;
+       margin: 40px;
+       box-shadow: 0px .5px 1px #d8d8d8;
+     }
+
+     .product-image {
+       width: 80%;
+     }
+
+     .product-image,
+     .product-info {
+       margin-top: 10px;
+       width: 50%;
+     }
+
+     .color-box {
+       width: 40px;
+       height: 40px;
+       margin-top: 5px;
+     }
+
+     .cart {
+       margin-right: 25px;
+       float: right;
+       border: 1px solid #d8d8d8;
+       padding: 5px 20px;
+     }
+
+     button {
+       margin-top: 30px;
+       border: none;
+       background-color: #1E95EA;
+       color: white;
+       height: 40px;
+       width: 150px;
+       font-size: 14px;
+     }
+
+     .disabledButton {
+       background-color: #d8d8d8;
+     }
+
+     .review-form {
+       width: 400px;
+       padding: 20px;
+       margin: 40px;
+       border: 1px solid #d8d8d8;
+     }
+
+     input {
+       width: 100%;
+       height: 25px;
+       margin-bottom: 20px;
+     }
+
+     textarea {
+       width: 100%;
+       height: 60px;
+     }
+
+     .tab {
+       margin-left: 20px;
+       cursor: pointer;
+     }
+
+     .activeTab {
+       color: #16C0B0;
+       text-decoration: underline;
+     }
+
+     .outOfStock{
+       text-decoration: line-through;
+     }
+
+
+
+
+    </style>
+  </head>
+  <body>
+    <div class="nav-bar"></div>
+    <div id="app">
+      <div class="cart">
+        <p>Cart({{ cart.length }})</p>
+      </div>
+
+      <product :premium="premium" @add-to-cart="updateCart" @remove-from-cart="removeItem"></product>
+      
+
+<!-- jsのdataで設定したproductの値を変えればHTML上のid="app"のdiv内のproductの部分も変わる -->
+      <!-- <div class="product">
+        <div class="product-image"> -->
+          <!-- Vueのv-bindタグ -->
+          <!-- データが更新される度にsrc,alt属性にリンクされる -->
+          <!-- v-bindタグの省略形は:(コロン) -->
+          <!-- <img v-bind:src="image" v-bind:alt="altText"/>
+        </div>
+
+        <div class="product-info"> -->
+          <!-- titleメソッドをよんで、returnしたものを表示してる。
+          titleはproductに格納された値とbrandに格納された値を結合してる
+        もともとは{{ product }}でjsのdataからproductの値を読んでたけど
+      　　メソッドもここに書けばreturnされた値が表示される-->
+          <!-- <h1>{{ title }}</h1>
+          <p><h1>{{ description }}</h1></p>
+          <p v-if="inStock">In Stock</p>
+          <p v-else="!inStock ">Out of Stock</p> -->
+
+          <!-- <p v-if="inventory > 10">In Stock</p>
+          <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+          <p v-else
+             :class="{ outOfStock: inventory==0 }"
+              >Out of Stock</p>
+          <p>{{ sale }}</p> -->
+              <!-- jsのinventoryが0だったらOut of Stockを表示して上から線を引く -->
+<!-- v-showでストックがある場合に飲み表示させる -->
+<!-- v-forでリストの中を表示。v-for="リストの中の一つ in リスト" {{リストの中の一つ}}-->
+          <!-- <ul>
+            <li v-for="detail in details">{{ detail }}</li>
+          </ul>
+          <h3>size</h3> -->
+          <!-- green,blueそれぞれにsizesリストの中身を表示。 -->
+          <!-- <ul>
+            <li  class="size" v-for="size in sizes">{{ size }}</li>
+          </ul> -->
+
+          <!-- variantsリストのオブジェクト一つずつにおけるvariantColorの表示 -->
+          <!-- variantの一意の値variantIdをキーとして使用し、Vueが各ノードのIDを追跡できるように -->
+          <!-- <div class="color-box"
+          　　　v-for="(variant,index) in variants"
+          　　　:key="variant.variantId"
+               :style="{ backgroundColor:variant.variantColor }"
+               @mouseover="updateProduct(index)"
+               > -->
+            <!-- classでcssのcolor-boxと関連づけ（幅とか）、色は:styleでvariant.variantColorでjsに書いたやつと関連づけ -->
+            <!-- variantColorのところをredとかカラーコードを入れると表示されるboxがその色になる。 -->
+            <!-- カーソルが上に来た時にメソッド起動。variant.variantImageを引数に -->
+            <!-- selectedVariantをjsで設定したら、variantImageの代わりにindexを渡す -->
+            <!--  -->
+
+          <!-- </div> -->
+          <!-- v-onでイベントをVueに伝える。 -->
+          <!-- addToCartはクリックされた時に起動するメソッド名 -->
+          <!-- <button v-on:click="remove"
+                  :disabled="!inStock"
+                  :class="{ disabledButton: !inStock }"
+                  >remove
+          </button> -->
+          <!-- :disabledで在庫なしの時(!inStockの時)にクリックできなくする -->
+          <!-- !inStockでdisabledButtonと関連づけ。cssで灰色に設定されてるので灰色になる -->
+          <!-- <button v-on:click="addToCart"
+                  :disabled="!inStock"
+                  :class="{ disabledButton: !inStock }"
+                  >Add to cart
+          </button>
+
+          <div class="cart">
+            <p>Cart({{ cart }})</p>
+          </div> -->
+
+
+        <!-- </div> -->
+  <!-- {{}}内はjsの式 -->
+        <!-- <h2>{{ product }} project</h2>
+        <h6>{{ product }}</h6> -->
+        <!-- 使用できる表現式 -->
+        <!-- {{ product + '?' }} -->
+        <!-- {{ firstName + ' ' + lastName }} -->
+        <!-- {{ message.sqlit('').reverse().join('') }} -->
+      <!-- </div>
+      <a :href="jump">Vue</a> -->
+
+    </div>
+    <!-- Vueが使用可能になるグローバルパッケージをjsファイルの上に。 -->
+    <!-- 上に置かないとproductの置換がされない -->
+    <script src="https://unpkg.com/vue"></script>
+    <!-- main.jsのsourceを使用 -->
+    <script src="main.js"></script>
+
+  </body>
+</html>
